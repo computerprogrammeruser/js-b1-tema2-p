@@ -23,6 +23,64 @@ const myJSON = '[{"base":10,"height":5,"rightTriangle":true},{"base":10,"height"
 
 //Escribe aquí tu solución / escriviu aquí la vostra solució:
 
+class Triangle {
+  constructor(base, height, rightTriangle) {
+    this.base = base;
+    this.height = height;
+    this.rightTriangle = rightTriangle;
+  }
+
+  get areaTriangle() {
+    return this.base * this.height / 2;
+  }
+
+  get rightHypotenuse() {
+    return this.rightTriangle ? Math.sqrt(Math.pow(this.base, 2) + Math.pow(this.height, 2)) : undefined;
+  }
+
+  get rightPerimeter() {
+    return this.rightTriangle ? this.base + this.height + this.rightHypotenuse : undefined;
+  }
+
+  static rightTriangleUnion(triangle1, triangle2){
+	if(!triangle1.rightTriangle || !triangle2.rightTriangle){
+		return undefined;
+	} else {
+		return triangle1.rightPerimeter + triangle2.rightPerimeter + Math.abs(triangle1.height - triangle2.height);
+	}
+  }
+
+  static areaPoligon(trianglesArray){
+	let areaPoligon = 0;
+	for (let i = 0; i < trianglesArray.length; i++){
+		areaPoligon = areaPoligon + trianglesArray[i].areaTriangle;
+	}
+	return areaPoligon;
+  }
+
+  isEquilateral(){
+	let errorMargin = 0.00001;
+	let exactValue = this.base * Math.sqrt(3) / 2;
+	return Math.abs(this.height - exactValue) < errorMargin;
+  }
+
+  static equilateralsArray(array){
+	let resultArray = [];
+	for(let i = 0; i < array.length; i++){
+		if(array[i].isEquilateral()){
+			resultArray.push(array[i]);
+		}
+	}
+	return resultArray;
+  }
+}
+
+const myTriangles = JSON.parse(myJSON).map(triangle => new Triangle(triangle.base, triangle.height, triangle.rightTriangle));
+
+const equilateralsTriangles = Triangle.equilateralsArray(myTriangles);
+
+const newTrianglesJSON = JSON.stringify(equilateralsTriangles);
+
 
 
 

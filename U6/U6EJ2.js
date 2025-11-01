@@ -25,7 +25,63 @@ const myJSON= '[{"brand":"Ford","model":"Mustang Boss 429","displacement":7000,"
 
 //Escribe aquí tu solución / escriviu aquí la vostra solució:
 
+class Car {
+  constructor(brand, model, displacement, horsePower, year) {
+    this.brand = brand;
+    this.model = model;
+    this.displacement = displacement;
+    this.horsePower = horsePower;
+    this.year = year;
+  }
 
+/*   set carAntiguaty(age) {
+    this.year = 2023 - age;
+  } */
+
+  get carAntiguaty(){
+    return 2023 - this.year;
+  }
+
+  get getCarDescription() {
+    return `${this.brand} ${this.model} ${this.displacement}cc`;
+  }
+
+  static compareAntiguaty(car1, car2){
+	if (car1.year < car2.year){
+		return car1;
+	} else if (car1.year == car2.year){
+		return [car1, car2];		
+	} else {
+		return car2;
+	}
+  }
+
+  static maxDisplacement(carsArray){
+	let maxDisplacement = carsArray[0];
+	for (let i = 0; i < carsArray.length; i++){
+		if (carsArray[i].displacement > maxDisplacement.displacement){
+			maxDisplacement = carsArray[i];
+		}
+	}
+	return maxDisplacement;
+  }
+
+  cv2kw(){
+	return this.horsePower * 0.736;
+  }
+}
+
+const myCars = JSON.parse(myJSON).map(car => new Car(car.brand, car.model, car.displacement, car.horsePower, car.year));
+
+const lessThan25 = new Array();
+
+for(let i = 0; i < myCars.length; i++){
+  if(myCars[i].carAntiguaty < 25){
+    lessThan25.push(myCars[i]);
+  }
+}
+
+const newCarsJSON = JSON.stringify(lessThan25);
 
 
 /**
