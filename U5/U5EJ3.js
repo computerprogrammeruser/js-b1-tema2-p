@@ -39,6 +39,59 @@
 */
 //Escribe aquí tu solución / escriviu aquí la vostra solució:
 
+class Triangle {
+  constructor(base, height, rightTriangle) {
+    this.base = base;
+    this.height = height;
+    this.rightTriangle = rightTriangle;
+  }
+
+  get areaTriangle() {
+    return this.base * this.height / 2;
+  }
+
+  get rightHypotenuse() {
+    return this.rightTriangle ? Math.sqrt(Math.pow(this.base, 2) + Math.pow(this.height, 2)) : undefined;
+  }
+
+  get rightPerimeter() {
+    return this.rightTriangle ? this.base + this.height + this.rightHypotenuse : undefined;
+  }
+
+  static rightTriangleUnion(triangle1, triangle2){
+	if(!triangle1.rightTriangle || !triangle2.rightTriangle){
+		return undefined;
+	} else {
+		return triangle1.rightPerimeter + triangle2.rightPerimeter + Math.abs(triangle1.height - triangle2.height);
+	}
+  }
+
+  static areaPoligon(trianglesArray){
+	let areaPoligon = 0;
+	for (let i = 0; i < trianglesArray.length; i++){
+		areaPoligon = areaPoligon + trianglesArray[i].areaTriangle;
+	}
+	return areaPoligon;
+  }
+
+  isEquilateral(){
+	let errorMargin = 0.00001;
+	let exactValue = this.base * Math.sqrt(3) / 2;
+	return Math.abs(this.height - exactValue) < errorMargin;
+  }
+}
+
+const myTriangle1 = new Triangle(10, 2.15443, false);
+const myTriangle2 = new Triangle(10, 5, true);
+const myTriangle3 = new Triangle(15, 7, false);
+
+Triangle.rightTriangleUnion(myTriangle1, myTriangle3);
+
+let trianglesArray = [myTriangle1, myTriangle2, myTriangle3];
+Triangle.areaPoligon(trianglesArray);
+
+myTriangle1.isEquilateral();
+
 
 
 

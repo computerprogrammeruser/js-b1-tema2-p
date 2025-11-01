@@ -33,6 +33,58 @@
 */
 //Escribe aquí tu solución / escriviu aquí la vostra solució:
 
+class Car {
+  constructor(brand, model, displacement, horsePower, year) {
+    this.brand = brand;
+    this.model = model;
+    this.displacement = displacement;
+    this.horsePower = horsePower;
+    this.year = year;
+  }
+
+  set carAntiguaty(age) {
+    this.year = 2023 - age;
+  }
+
+  get getCarDescription() {
+    return `${this.brand} ${this.model} ${this.displacement}cc`;
+  }
+
+  static compareAntiguaty(car1, car2){
+	if (car1.year < car2.year){
+		return car1;
+	} else if (car1.year == car2.year){
+		return [car1, car2];		
+	} else {
+		return car2;
+	}
+  }
+
+  static maxDisplacement(carsArray){
+	let maxDisplacement = carsArray[0];
+	for (let i = 0; i < carsArray.length; i++){
+		if (carsArray[i].displacement > maxDisplacement.displacement){
+			maxDisplacement = carsArray[i];
+		}
+	}
+	return maxDisplacement;
+  }
+
+  cv2kw(){
+	return this.horsePower * 0.736;
+  }
+}
+
+const car1 = new Car('Ford', 'Mustang Boss 429', 7000, 375, 1969);
+const car2 = new Car('BMW', '520d', 1980, 136, 2002);
+const car3 = new Car('Mercedes-Benz', '280 SLC', 2746, 136, 1979);
+
+Car.compareAntiguaty(car1, car3);
+
+let carsArray = [car1, car2, car3];
+Car.maxDisplacement(carsArray);
+
+car2.cv2kw();
 
 
 
